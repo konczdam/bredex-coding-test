@@ -9,5 +9,4 @@ public class Forma1TeamsApplication {
     public static void main(String[] args) {
         SpringApplication.run(Forma1TeamsApplication.class, args);
     }
-
 }
