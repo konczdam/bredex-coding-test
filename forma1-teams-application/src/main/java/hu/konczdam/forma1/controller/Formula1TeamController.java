@@ -40,4 +40,17 @@ public class Formula1TeamController {
         formula1TeamService.deleteTeam(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Formula1Team> updateTeam(@PathVariable Integer id, @RequestBody Formula1Team updatedTeam) {
+        Optional<Formula1Team> existingTeam = formula1TeamService.getTeamById(id);
+
+        if (existingTeam.isPresent()) {
+            updatedTeam.setId(id); // Ensure the updated team has the correct ID
+            Formula1Team savedTeam = formula1TeamService.saveTeam(updatedTeam);
+            return ResponseEntity.ok(savedTeam);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
