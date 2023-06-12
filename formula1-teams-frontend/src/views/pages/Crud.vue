@@ -4,6 +4,8 @@ import { ref, onMounted, onBeforeMount } from 'vue';
 import ProductService from '@/service/ProductService';
 import { useToast } from 'primevue/usetoast';
 import { useLayout } from '@/layout/composables/layout';
+import { useAuthStore } from '@/stores/AuthStore';
+import { useFormula1TeamStore} from "@/stores/Formula1TeamStore";
 
 const toast = useToast();
 const { contextPath } = useLayout();
@@ -24,12 +26,15 @@ const statuses = ref([
 ]);
 
 const productService = new ProductService();
+const authStore = useAuthStore();
+const { teams, fetchTeams } = useFormula1TeamStore();
 
 onBeforeMount(() => {
     initFilters();
 });
 onMounted(() => {
     productService.getProducts().then((data) => (products.value = data));
+    fetchTeams().then(() => console.log('Teams fetched'));
 });
 const formatCurrency = (value) => {
     return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -141,7 +146,7 @@ const initFilters = () => {
 
                 <DataTable
                     ref="dt"
-                    :value="products"
+                    :value="teams"
                     v-model:selection="selectedProducts"
                     dataKey="id"
                     :paginator="true"
@@ -163,52 +168,43 @@ const initFilters = () => {
                     </template>
 
                     <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-                    <Column field="code" header="Code" :sortable="true" headerStyle="width:14%; min-width:10rem;">
-                        <template #body="slotProps">
-                            <span class="p-column-title">Code</span>
-                            {{ slotProps.data.code }}
-                        </template>
-                    </Column>
                     <Column field="name" header="Name" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
                             <span class="p-column-title">Name</span>
                             {{ slotProps.data.name }}
                         </template>
                     </Column>
-                    <Column header="Image" headerStyle="width:14%; min-width:10rem;">
+                    <Column field="yearFounded" header="Year founded" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
-                            <span class="p-column-title">Image</span>
-                            <img :src="contextPath + 'demo/images/product/' + slotProps.data.image" :alt="slotProps.data.image" class="shadow-2" width="100" />
+                            <span class="p-column-title">Year founded</span>
+                            {{ slotProps.data.yearFounded }}
                         </template>
                     </Column>
-                    <Column field="price" header="Price" :sortable="true" headerStyle="width:14%; min-width:8rem;">
+                    <Column field="championshipsWon" header="ChampionshipsWon" :sortable="true" headerStyle="width:14%; min-width:10rem;">
                         <template #body="slotProps">
-                            <span class="p-column-title">Price</span>
-                            {{ formatCurrency(slotProps.data.price) }}
+                            <span class="p-column-title">championshipsWon</span>
+                            {{ slotProps.data.championshipsWon }}
                         </template>
                     </Column>
-                    <Column field="category" header="Category" :sortable="true" headerStyle="width:14%; min-width:10rem;">
+                    <Column
+                        field="entryFeePaid"
+                        header="Entry Fee Paid"
+                        :sortable="true"
+                        data-type="boolean"
+                        :style="{ width: '150px' }"
+                    >
                         <template #body="slotProps">
-                            <span class="p-column-title">Category</span>
-                            {{ slotProps.data.category }}
+                            <i
+                                style="font-size: 24px"
+                                class="pi"
+                                :class="{
+                                    'pi-times-circle text-red-400': !slotProps.data.entryFeePaid,
+                                    'pi-check-circle text-green-500': slotProps.data.entryFeePaid
+                                }"
+                            ></i>
                         </template>
-                    </Column>
-                    <Column field="rating" header="Reviews" :sortable="true" headerStyle="width:14%; min-width:10rem;">
-                        <template #body="slotProps">
-                            <span class="p-column-title">Rating</span>
-                            <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
-                        </template>
-                    </Column>
-                    <Column field="inventoryStatus" header="Status" :sortable="true" headerStyle="width:14%; min-width:10rem;">
-                        <template #body="slotProps">
-                            <span class="p-column-title">Status</span>
-                            <span :class="'product-badge status-' + (slotProps.data.inventoryStatus ? slotProps.data.inventoryStatus.toLowerCase() : '')">{{ slotProps.data.inventoryStatus }}</span>
-                        </template>
-                    </Column>
-                    <Column headerStyle="min-width:10rem;">
-                        <template #body="slotProps">
-                            <Button icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" @click="editProduct(slotProps.data)" />
-                            <Button icon="pi pi-trash" class="p-button-rounded p-button-warning mt-2" @click="confirmDeleteProduct(slotProps.data)" />
+                        <template #filter="{ filterModel }">
+                            <Checkbox v-model="filterModel.entryFeePaid" />
                         </template>
                     </Column>
                 </DataTable>

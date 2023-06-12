@@ -59,6 +59,7 @@ const isOutsideClicked = (event) => {
             <router-view></router-view>
         </div>
     </div>
+
 </template>
 
 <style lang="scss" scoped></style>

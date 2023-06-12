@@ -1,13 +1,21 @@
 <script setup>
 import { useLayout } from '@/layout/composables/layout';
 import { computed } from 'vue';
+import { useAuthStore } from "@/stores/AuthStore";
 import Crud from '@/views/pages/Crud.vue';
+import router from '@/router';
 
 const { contextPath } = useLayout();
 
 const logoUrl = computed(() => {
     return `${contextPath}layout/images/car-of-formula-1.svg`;
 });
+const { user, logout } = useAuthStore();
+const userLoggedIn = computed(() => !!user?.token);
+
+const navigateToLogin = () => {
+    router.push({ path: '/auth/login' });
+};
 </script>
 
 <template>
@@ -20,7 +28,9 @@ const logoUrl = computed(() => {
                 </a>
                 <div class="align-items-center surface-0 flex-grow-1 justify-content-end hidden lg:flex absolute lg:static w-full left-0 px-6 lg:px-0 z-2" style="top: 120px">
                     <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
-                        <Button label="Login" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-blue-500"></Button>
+                        <Button v-if="userLoggedIn" label="Profile" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-blue-500" @click="navigateToLogin"></Button>
+                        <Button v-if="!userLoggedIn" label="Login" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-blue-500" @click="navigateToLogin"></Button>
+                        <Button v-else label="Logout" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-red-500" @click="logout"></Button>
                     </div>
                 </div>
             </div>
