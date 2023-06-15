@@ -1,3 +1,8 @@
+drop table if exists user_roles;
+drop table if exists role;
+drop table if exists userz;
+drop table if exists formula1_team;
+
 create table formula1_team(
  id int primary key auto_increment,
  name varchar(255) not null,

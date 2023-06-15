@@ -1,0 +1,46 @@
+
+# Getting a token
+POST http://localhost:8080/auth/signin
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "f1test2018"
+}
+###
+
+# Public endpoints
+GET http://localhost:8080/teams
+###
+GET http://localhost:8080/teams/1
+###
+
+
+# Endpoints needing tokens
+POST http://localhost:8080/teams
+Content-Type: application/json
+Authorization: Bearer >>token<<
+
+{
+  "name": "Test Team",
+  "yearFounded": "1970",
+  "championshipsWon": 2,
+  "entryFeePaid": false
+}
+
+###
+PUT http://localhost:8080/teams/1
+Content-Type: application/json
+Authorization: Bearer >>token<<
+
+{
+  "id": 1,
+  "name": "Scuderia Ferrari",
+  "yearFounded": "1950",
+  "championshipsWon": 20,
+  "entryFeePaid": true
+}
+
+###
+DELETE http://localhost:8080/teams/14
+Authorization: Bearer 
