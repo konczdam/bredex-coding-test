@@ -20,7 +20,8 @@ const containerClass = computed(() => {
         'layout-theme-dark': layoutConfig.darkTheme.value === 'dark',
         'layout-overlay': layoutConfig.menuMode.value === 'overlay',
         'layout-static': layoutConfig.menuMode.value === 'static',
-        'layout-static-inactive': layoutState.staticMenuDesktopInactive.value && layoutConfig.menuMode.value === 'static',
+        'layout-static-inactive':
+            layoutState.staticMenuDesktopInactive.value && layoutConfig.menuMode.value === 'static',
         'layout-overlay-active': layoutState.overlayMenuActive.value,
         'layout-mobile-active': layoutState.staticMenuMobileActive.value,
         'p-input-filled': layoutConfig.inputStyle.value === 'filled',
@@ -49,7 +50,12 @@ const isOutsideClicked = (event) => {
     const sidebarEl = document.querySelector('.layout-sidebar');
     const topbarEl = document.querySelector('.layout-menu-button');
 
-    return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
+    return !(
+        sidebarEl.isSameNode(event.target) ||
+        sidebarEl.contains(event.target) ||
+        topbarEl.isSameNode(event.target) ||
+        topbarEl.contains(event.target)
+    );
 };
 </script>
 
@@ -59,7 +65,6 @@ const isOutsideClicked = (event) => {
             <router-view></router-view>
         </div>
     </div>
-
 </template>
 
 <style lang="scss" scoped></style>

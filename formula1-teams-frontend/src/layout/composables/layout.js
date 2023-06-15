@@ -51,5 +51,15 @@ export function useLayout() {
 
     const isDarkTheme = computed(() => layoutConfig.darkTheme);
 
-    return { contextPath, layoutConfig: toRefs(layoutConfig), layoutState: toRefs(layoutState), changeThemeSettings, setScale, onMenuToggle, isSidebarActive, isDarkTheme, setActiveMenuItem };
+    return {
+        contextPath,
+        layoutConfig: toRefs(layoutConfig),
+        layoutState: toRefs(layoutState),
+        changeThemeSettings,
+        setScale,
+        onMenuToggle,
+        isSidebarActive,
+        isDarkTheme,
+        setActiveMenuItem
+    };
 }

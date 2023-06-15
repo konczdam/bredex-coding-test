@@ -36,6 +36,11 @@ export const useAuthStore = defineStore('authStore', () => {
 
     function logout() {
         Object.keys(state.user).forEach((key) => delete state.user[key]);
+        toast.add({
+            severity: 'info',
+            summary: 'User logged out',
+            life: 3000
+        });
     }
 
     return { user: state.user, login, logout };

@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import { createPinia } from "pinia";
+import { createPinia } from 'pinia';
 
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
@@ -102,6 +102,7 @@ import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 
 import '@/assets/styles.scss';
+import { setupVeeValidate } from '@/vee-validate';
 
 const app = createApp(App);
 
@@ -111,6 +112,8 @@ app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
 app.use(createPinia());
+
+setupVeeValidate(app);
 
 app.directive('tooltip', Tooltip);
 app.directive('badge', BadgeDirective);
