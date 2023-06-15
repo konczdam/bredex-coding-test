@@ -19,3 +19,9 @@ Az alkalmazás futtatásához egyéb konfiguráció nem szükséges
 ###  Bejelentkezés
 - admin
 - f1test2018
+
+
+### Rövid leírás
+Az alkalmazást Vue.js 3 keretrendszerrel készítettem el.
+Felhasználtam a [PrimeVue](https://primevue.org/) komponens könyvtárat, és az ehhez elérhető ingyenes [Sakai](https://www.primefaces.org/sakai-vue/#/)
+nevű sablonból ollóztam össze az oldalakat. 

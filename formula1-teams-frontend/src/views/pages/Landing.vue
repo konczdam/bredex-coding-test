@@ -29,7 +29,7 @@ const navigateToProfile = () => {
                 class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static mb-3"
             >
                 <a class="flex align-items-center" href="#">
-                    <img :src="logoUrl" alt="Sakai Logo" height="50" class="mr-0 lg:mr-2" /><span
+                    <img :src="logoUrl" alt="Formula1 Logo" height="50" class="mr-0 lg:mr-2" /><span
                         class="text-900 font-medium text-2xl line-height-3 mr-8"
                         >Formula-1</span
                     >
